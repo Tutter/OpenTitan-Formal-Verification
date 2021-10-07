@@ -1020,6 +1020,7 @@ void clearManifest(){
 		<location id="id56" x="-459" y="-629">
 		</location>
 		<location id="id57" x="-85" y="-629">
+			<name x="-95" y="-663">Started</name>
 		</location>
 		<location id="id58" x="238" y="-629">
 		</location>
@@ -1622,82 +1623,87 @@ void clear(){
     digest = 0;  
 }
 </declaration>
-		<location id="id104" x="-833" y="-459">
+		<location id="id104" x="-1062" y="-1079">
+			<name x="-1096" y="-1113">FetchingKey</name>
 		</location>
-		<location id="id105" x="-935" y="-459">
+		<location id="id105" x="-1181" y="-1079">
 		</location>
-		<location id="id106" x="-1105" y="-459">
+		<location id="id106" x="-1343" y="-1079">
+			<name x="-1385" y="-1113">FetchingDigest</name>
 		</location>
-		<location id="id107" x="-1241" y="-459">
+		<location id="id107" x="-1479" y="-1079">
 		</location>
-		<location id="id108" x="-1684" y="-460">
+		<location id="id108" x="-1922" y="-1080">
+			<name x="-1912" y="-1113">Idle</name>
 		</location>
-		<location id="id109" x="-663" y="-459">
+		<location id="id109" x="-901" y="-1079">
+			<name x="-986" y="-1113">CheckingSign</name>
 		</location>
-		<location id="id110" x="-1395" y="-460">
+		<location id="id110" x="-1640" y="-1079">
+			<name x="-1674" y="-1113">FetchingSign</name>
 		</location>
-		<location id="id111" x="-1531" y="-460">
+		<location id="id111" x="-1776" y="-1079">
 		</location>
 		<init ref="id108"/>
 		<transition>
 			<source ref="id104"/>
 			<target ref="id109"/>
-			<label kind="synchronisation" x="-816" y="-442">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-816" y="-425">key = GlobalPublicKey,
+			<label kind="synchronisation" x="-1045" y="-1071">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-1045" y="-1054">key = GlobalPublicKey,
 clearGlobalPublicKey()</label>
 		</transition>
 		<transition>
 			<source ref="id105"/>
 			<target ref="id104"/>
-			<label kind="synchronisation" x="-935" y="-501">CheckSRAM[4]!</label>
+			<label kind="synchronisation" x="-1173" y="-1071">CheckSRAM[4]!</label>
 		</transition>
 		<transition>
 			<source ref="id106"/>
 			<target ref="id105"/>
-			<label kind="synchronisation" x="-1071" y="-450">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-1079" y="-433">digest = GlobalDigest,
+			<label kind="synchronisation" x="-1326" y="-1071">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-1326" y="-1054">digest = GlobalDigest,
 GlobalDigest = 0</label>
 		</transition>
 		<transition>
 			<source ref="id107"/>
 			<target ref="id106"/>
-			<label kind="synchronisation" x="-1232" y="-484">CheckSRAM[1]!</label>
+			<label kind="synchronisation" x="-1462" y="-1071">CheckSRAM[1]!</label>
 		</transition>
 		<transition>
 			<source ref="id110"/>
 			<target ref="id107"/>
-			<label kind="synchronisation" x="-1386" y="-451">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-1386" y="-434">signature = GlobalSignature,
+			<label kind="synchronisation" x="-1632" y="-1071">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-1632" y="-1054">signature = GlobalSignature,
 GlobalSignature = 0</label>
 		</transition>
 		<transition>
 			<source ref="id111"/>
 			<target ref="id110"/>
-			<label kind="synchronisation" x="-1531" y="-494">CheckSRAM[5]!</label>
+			<label kind="synchronisation" x="-1759" y="-1071">CheckSRAM[5]!</label>
 		</transition>
 		<transition>
 			<source ref="id108"/>
 			<target ref="id111"/>
-			<label kind="synchronisation" x="-1675" y="-451">CheckSignatureBC?</label>
+			<label kind="synchronisation" x="-1913" y="-1071">CheckSignatureBC?</label>
 		</transition>
 		<transition>
 			<source ref="id109"/>
 			<target ref="id108"/>
-			<label kind="guard" x="-841" y="-586">!checkSignature()</label>
-			<label kind="synchronisation" x="-841" y="-569">RSANotValidBC!</label>
-			<label kind="assignment" x="-841" y="-552">clear()</label>
-			<nail x="-663" y="-484"/>
-			<nail x="-663" y="-527"/>
-			<nail x="-1684" y="-528"/>
+			<label kind="guard" x="-1462" y="-1207">!checkSignature()</label>
+			<label kind="synchronisation" x="-1462" y="-1190">RSANotValidBC!</label>
+			<label kind="assignment" x="-1462" y="-1173">clear()</label>
+			<nail x="-901" y="-1104"/>
+			<nail x="-901" y="-1147"/>
+			<nail x="-1922" y="-1148"/>
 		</transition>
 		<transition>
 			<source ref="id109"/>
 			<target ref="id108"/>
-			<label kind="guard" x="-858" y="-323">checkSignature()</label>
-			<label kind="synchronisation" x="-858" y="-306">RSAValidBC!</label>
-			<label kind="assignment" x="-858" y="-289">clear()</label>
-			<nail x="-663" y="-340"/>
-			<nail x="-1684" y="-341"/>
+			<label kind="guard" x="-1462" y="-960">checkSignature()</label>
+			<label kind="synchronisation" x="-1462" y="-943">RSAValidBC!</label>
+			<label kind="assignment" x="-1462" y="-926">clear()</label>
+			<nail x="-901" y="-960"/>
+			<nail x="-1922" y="-961"/>
 		</transition>
 	</template>
 	<template>
@@ -3829,23 +3835,19 @@ is equal to 1. The guards are boolean, but their values are represented as 0 or 
 exactly one of the guards must be true.</comment>
 		</query>
 		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>E&lt;&gt; exists (i : int [0, NumberOfFlashBanks - 1]) RomExt(i).Success</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
 			<formula>A[] !PmpModule.canWrite(30 + 35 * ROMStage.loopIndex, 41 + 35 * ROMStage.loopIndex)</formula>
 			<comment>D10: Writing Manifest is Disallowed.                                                                                                                                                                                       
 This is a safety property. It says that according to the \uppTemp{PmpModule} template it is never possible 
 to write anything to the specific range of memory where the currentManifest is placed. This query validates
 that it is impossible to change the manifests by writing to flash.</comment>
+		</query>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; exists (i : int [0, NumberOfFlashBanks - 1]) RomExt(i).Success</formula>
+			<comment>Query to see if the malicious ROM_ext can reconstitute a secret key in the HMAC module using wipe vulnerability</comment>
 		</query>
 	</queries>
 </nta>

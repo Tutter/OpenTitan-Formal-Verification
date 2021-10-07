@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
-	<declaration>// Når man tænder, er hele flash read-only og locked.
-// Når man har verificeret noget, "åbner" man en region gennem PMP, så det kan eksekveres.
+	<declaration>// When you turn on the system all of flash is read-only and locked.
+// When you verify a manifest you unlock a region of flash through PMP so that it can be executed.
 /*
 TEST PURPOSE KEY PAIR:
 Private Key: (143, 103)
@@ -954,7 +954,7 @@ void clearManifest(){
 			<name x="255" y="-484">RomExtRunning</name>
 		</location>
 		<location id="id47" x="238" y="-255">
-			<name x="246" y="-272">CheckedSignature</name>
+			<name x="255" y="-272">CheckedSignature</name>
 		</location>
 		<location id="id48" x="238" y="-187">
 			<name x="263" y="-195">CheckingSignature</name>
@@ -970,6 +970,7 @@ void clearManifest(){
 		<location id="id52" x="-459" y="-629">
 		</location>
 		<location id="id53" x="-85" y="-629">
+			<name x="-95" y="-663">Started</name>
 		</location>
 		<location id="id54" x="238" y="-629">
 		</location>
@@ -1506,82 +1507,86 @@ void clear(){
     digest = 0;  
 }
 </declaration>
-		<location id="id97" x="-833" y="-459">
+		<location id="id97" x="-8117" y="-8287">
+			<name x="-8202" y="-8313">FetchingKey</name>
 		</location>
-		<location id="id98" x="-935" y="-459">
+		<location id="id98" x="-8117" y="-8338">
 		</location>
-		<location id="id99" x="-1105" y="-459">
+		<location id="id99" x="-8117" y="-8423">
+			<name x="-8219" y="-8448">FetchingDigest</name>
 		</location>
-		<location id="id100" x="-1241" y="-459">
+		<location id="id100" x="-8117" y="-8474">
 		</location>
-		<location id="id101" x="-1684" y="-460">
+		<location id="id101" x="-8117" y="-8661">
+			<name x="-8151" y="-8686">Idle</name>
 		</location>
-		<location id="id102" x="-663" y="-459">
+		<location id="id102" x="-8117" y="-8159">
+			<name x="-8211" y="-8185">CheckingSign</name>
 		</location>
-		<location id="id103" x="-1395" y="-460">
+		<location id="id103" x="-8117" y="-8559">
+			<name x="-8211" y="-8584">FetchingSign</name>
 		</location>
-		<location id="id104" x="-1531" y="-460">
+		<location id="id104" x="-8117" y="-8610">
 		</location>
 		<init ref="id101"/>
 		<transition>
 			<source ref="id97"/>
 			<target ref="id102"/>
-			<label kind="synchronisation" x="-816" y="-442">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-816" y="-425">key = GlobalPublicKey,
+			<label kind="synchronisation" x="-8109" y="-8278">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-8109" y="-8261">key = GlobalPublicKey,
 clearGlobalPublicKey()</label>
 		</transition>
 		<transition>
 			<source ref="id98"/>
 			<target ref="id97"/>
-			<label kind="synchronisation" x="-935" y="-501">CheckSRAM[4]!</label>
+			<label kind="synchronisation" x="-8109" y="-8329">CheckSRAM[4]!</label>
 		</transition>
 		<transition>
 			<source ref="id99"/>
 			<target ref="id98"/>
-			<label kind="synchronisation" x="-1071" y="-450">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-1079" y="-433">digest = GlobalDigest,
+			<label kind="synchronisation" x="-8109" y="-8414">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-8109" y="-8397">digest = GlobalDigest,
 GlobalDigest = 0</label>
 		</transition>
 		<transition>
 			<source ref="id100"/>
 			<target ref="id99"/>
-			<label kind="synchronisation" x="-1232" y="-484">CheckSRAM[1]!</label>
+			<label kind="synchronisation" x="-8109" y="-8465">CheckSRAM[1]!</label>
 		</transition>
 		<transition>
 			<source ref="id103"/>
 			<target ref="id100"/>
-			<label kind="synchronisation" x="-1386" y="-451">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-1386" y="-434">signature = GlobalSignature,
+			<label kind="synchronisation" x="-8109" y="-8550">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-8109" y="-8533">signature = GlobalSignature,
 GlobalSignature = 0</label>
 		</transition>
 		<transition>
 			<source ref="id104"/>
 			<target ref="id103"/>
-			<label kind="synchronisation" x="-1531" y="-494">CheckSRAM[5]!</label>
+			<label kind="synchronisation" x="-8109" y="-8601">CheckSRAM[5]!</label>
 		</transition>
 		<transition>
 			<source ref="id101"/>
 			<target ref="id104"/>
-			<label kind="synchronisation" x="-1675" y="-451">CheckSignatureBC?</label>
+			<label kind="synchronisation" x="-8109" y="-8652">CheckSignatureBC?</label>
 		</transition>
 		<transition>
 			<source ref="id102"/>
 			<target ref="id101"/>
-			<label kind="guard" x="-841" y="-586">!checkSignature()</label>
-			<label kind="synchronisation" x="-841" y="-569">RSANotValidBC!</label>
-			<label kind="assignment" x="-841" y="-552">clear()</label>
-			<nail x="-663" y="-484"/>
-			<nail x="-663" y="-527"/>
-			<nail x="-1684" y="-528"/>
+			<label kind="guard" x="-8049" y="-8219">!checkSignature()</label>
+			<label kind="synchronisation" x="-8049" y="-8202">RSANotValidBC!</label>
+			<label kind="assignment" x="-8049" y="-8185">clear()</label>
+			<nail x="-7930" y="-8159"/>
+			<nail x="-7930" y="-8661"/>
 		</transition>
 		<transition>
 			<source ref="id102"/>
 			<target ref="id101"/>
-			<label kind="guard" x="-858" y="-323">checkSignature()</label>
-			<label kind="synchronisation" x="-858" y="-306">RSAValidBC!</label>
-			<label kind="assignment" x="-858" y="-289">clear()</label>
-			<nail x="-663" y="-340"/>
-			<nail x="-1684" y="-341"/>
+			<label kind="guard" x="-8270" y="-8219">checkSignature()</label>
+			<label kind="synchronisation" x="-8270" y="-8202">RSAValidBC!</label>
+			<label kind="assignment" x="-8270" y="-8185">clear()</label>
+			<nail x="-8279" y="-8159"/>
+			<nail x="-8279" y="-8661"/>
 		</transition>
 	</template>
 	<template>

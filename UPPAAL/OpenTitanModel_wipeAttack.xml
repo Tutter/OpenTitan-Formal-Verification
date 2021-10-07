@@ -20,6 +20,7 @@ const int NumberOfFieldsInSRAM = 8;
 int resultBuffer;
 int GlobalWipeBuffer;
 typedef int[1,16] t_wipeRange;
+const int ATCK_SUCC = 3;
 
 // OTP value indices
 const int RootKeyIndex = 0;
@@ -1355,7 +1356,7 @@ int result;</declaration>
 		<transition>
 			<source ref="id81"/>
 			<target ref="id80"/>
-			<label kind="guard" x="-25" y="-374">result == 3</label>
+			<label kind="guard" x="-76" y="-374">result == ATCK_SUCC</label>
 			<nail x="-102" y="-314"/>
 			<nail x="-102" y="-348"/>
 		</transition>
@@ -1622,87 +1623,87 @@ void clear(){
     digest = 0;  
 }
 </declaration>
-		<location id="id104" x="-824" y="-459">
-			<name x="-867" y="-493">FetchingKey</name>
+		<location id="id104" x="-1062" y="-1079">
+			<name x="-1096" y="-1113">FetchingKey</name>
 		</location>
-		<location id="id105" x="-943" y="-459">
+		<location id="id105" x="-1181" y="-1079">
 		</location>
-		<location id="id106" x="-1105" y="-459">
-			<name x="-1156" y="-493">FecthingDigest</name>
+		<location id="id106" x="-1343" y="-1079">
+			<name x="-1385" y="-1113">FetchingDigest</name>
 		</location>
-		<location id="id107" x="-1241" y="-459">
+		<location id="id107" x="-1479" y="-1079">
 		</location>
-		<location id="id108" x="-1684" y="-460">
-			<name x="-1674" y="-493">Idle</name>
+		<location id="id108" x="-1922" y="-1080">
+			<name x="-1912" y="-1113">Idle</name>
 		</location>
-		<location id="id109" x="-663" y="-459">
-			<name x="-756" y="-493">CheckingSign</name>
+		<location id="id109" x="-901" y="-1079">
+			<name x="-986" y="-1113">CheckingSign</name>
 		</location>
-		<location id="id110" x="-1395" y="-460">
-			<name x="-1428" y="-493">FetchingSign</name>
+		<location id="id110" x="-1640" y="-1079">
+			<name x="-1674" y="-1113">FetchingSign</name>
 		</location>
-		<location id="id111" x="-1531" y="-460">
+		<location id="id111" x="-1776" y="-1079">
 		</location>
 		<init ref="id108"/>
 		<transition>
 			<source ref="id104"/>
 			<target ref="id109"/>
-			<label kind="synchronisation" x="-816" y="-450">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-816" y="-433">key = GlobalPublicKey,
+			<label kind="synchronisation" x="-1045" y="-1071">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-1045" y="-1054">key = GlobalPublicKey,
 clearGlobalPublicKey()</label>
 		</transition>
 		<transition>
 			<source ref="id105"/>
 			<target ref="id104"/>
-			<label kind="synchronisation" x="-935" y="-450">CheckSRAM[4]!</label>
+			<label kind="synchronisation" x="-1173" y="-1071">CheckSRAM[4]!</label>
 		</transition>
 		<transition>
 			<source ref="id106"/>
 			<target ref="id105"/>
-			<label kind="synchronisation" x="-1088" y="-450">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-1088" y="-433">digest = GlobalDigest,
+			<label kind="synchronisation" x="-1326" y="-1071">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-1326" y="-1054">digest = GlobalDigest,
 GlobalDigest = 0</label>
 		</transition>
 		<transition>
 			<source ref="id107"/>
 			<target ref="id106"/>
-			<label kind="synchronisation" x="-1215" y="-450">CheckSRAM[1]!</label>
+			<label kind="synchronisation" x="-1462" y="-1071">CheckSRAM[1]!</label>
 		</transition>
 		<transition>
 			<source ref="id110"/>
 			<target ref="id107"/>
-			<label kind="synchronisation" x="-1386" y="-451">CheckSRAMReturn?</label>
-			<label kind="assignment" x="-1386" y="-434">signature = GlobalSignature,
+			<label kind="synchronisation" x="-1632" y="-1071">CheckSRAMReturn?</label>
+			<label kind="assignment" x="-1632" y="-1054">signature = GlobalSignature,
 GlobalSignature = 0</label>
 		</transition>
 		<transition>
 			<source ref="id111"/>
 			<target ref="id110"/>
-			<label kind="synchronisation" x="-1513" y="-450">CheckSRAM[5]!</label>
+			<label kind="synchronisation" x="-1759" y="-1071">CheckSRAM[5]!</label>
 		</transition>
 		<transition>
 			<source ref="id108"/>
 			<target ref="id111"/>
-			<label kind="synchronisation" x="-1675" y="-451">CheckSignatureBC?</label>
+			<label kind="synchronisation" x="-1913" y="-1071">CheckSignatureBC?</label>
 		</transition>
 		<transition>
 			<source ref="id109"/>
 			<target ref="id108"/>
-			<label kind="guard" x="-1198" y="-586">!checkSignature()</label>
-			<label kind="synchronisation" x="-1198" y="-569">RSANotValidBC!</label>
-			<label kind="assignment" x="-1198" y="-552">clear()</label>
-			<nail x="-663" y="-484"/>
-			<nail x="-663" y="-527"/>
-			<nail x="-1684" y="-528"/>
+			<label kind="guard" x="-1462" y="-1207">!checkSignature()</label>
+			<label kind="synchronisation" x="-1462" y="-1190">RSANotValidBC!</label>
+			<label kind="assignment" x="-1462" y="-1173">clear()</label>
+			<nail x="-901" y="-1104"/>
+			<nail x="-901" y="-1147"/>
+			<nail x="-1922" y="-1148"/>
 		</transition>
 		<transition>
 			<source ref="id109"/>
 			<target ref="id108"/>
-			<label kind="guard" x="-1198" y="-340">checkSignature()</label>
-			<label kind="synchronisation" x="-1198" y="-323">RSAValidBC!</label>
-			<label kind="assignment" x="-1198" y="-306">clear()</label>
-			<nail x="-663" y="-340"/>
-			<nail x="-1684" y="-341"/>
+			<label kind="guard" x="-1462" y="-960">checkSignature()</label>
+			<label kind="synchronisation" x="-1462" y="-943">RSAValidBC!</label>
+			<label kind="assignment" x="-1462" y="-926">clear()</label>
+			<nail x="-901" y="-960"/>
+			<nail x="-1922" y="-961"/>
 		</transition>
 	</template>
 	<template>
@@ -3762,149 +3763,6 @@ this location. </comment>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A[](FinalJumpToRomExt.ROMExtRunning imply GlobalMemoryIsScrambled == false)</formula>
-			<comment>Tested, failed</comment>
-		</query>
-		<query>
-			<formula>A[](FlashController.ScrambleCheck imply !GlobalMemoryIsScrambled)</formula>
-			<comment>tested, success</comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[](!ExceptionHandler.ExceptionRaised)</formula>
-			<comment>Tested, success</comment>
-		</query>
-		<query>
-			<formula>A[](FinalJumpToRomExt.ROMExtRunning imply GlobalMemoryIsScrambled == false) &amp;&amp;
-(FlashController.ScrambleCheck imply !GlobalMemoryIsScrambled)</formula>
-			<comment>Tested, failed</comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[](!ExceptionHandler.ExceptionRaised) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply GlobalMemoryIsScrambled == false) &amp;&amp;
-(FlashController.ScrambleCheck imply !GlobalMemoryIsScrambled)</formula>
-			<comment>Tested, failed</comment>
-		</query>
-		<query>
-			<formula>A[](SRAMController.HitOrMiss imply !GlobalMemoryIsScrambled) &amp;&amp;
-(MemoryHandling.ChooseType imply (((GlobalBootPolicy != GlobalEmptyBootPolicy) + (GlobalImageCode != 0) + (GlobalDigest != 0) + (GlobalPublicKey != GlobalEmptyPublicKey) + (GlobalManifest != GlobalEmptyManifest) + (GlobalSignature != 0) + (GlobalPrivateKey != GlobalEmptyPublicKey) + (GlobalPublicKeyIdWhitelist[0] != -1)) == 1)) &amp;&amp;
-(!PmpModule.canWrite(30 + 35 * ROMStage.loopIndex, 41 + 35 * ROMStage.loopIndex))</formula>
-			<comment>Tested, success</comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[](!ExceptionHandler.ExceptionRaised) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply GlobalMemoryIsScrambled == false) &amp;&amp;
-(FlashController.ScrambleCheck imply !GlobalMemoryIsScrambled) &amp;&amp;
-(SRAMController.HitOrMiss imply !GlobalMemoryIsScrambled) &amp;&amp;
-(MemoryHandling.ChooseType imply (((GlobalBootPolicy != GlobalEmptyBootPolicy) + (GlobalImageCode != 0) + (GlobalDigest != 0) + (GlobalPublicKey != GlobalEmptyPublicKey) + (GlobalManifest != GlobalEmptyManifest) + (GlobalSignature != 0) + (GlobalPrivateKey != GlobalEmptyPublicKey) + (GlobalPublicKeyIdWhitelist[0] != -1)) == 1)) &amp;&amp;
-(!PmpModule.canWrite(30 + 35 * ROMStage.loopIndex, 41 + 35 * ROMStage.loopIndex))</formula>
-			<comment>Tested, failed</comment>
-		</query>
-		<query>
-			<formula>A[](PmpModule.GoodRead imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].read)) &amp;&amp;
-(PmpModule.GoodWrite imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].write)) &amp;&amp;
-(PmpModule.GoodExecute imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].execute)) &amp;&amp;
-(PmpModule.BadRead imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;PmpRegions[pmpIndex].read))) &amp;&amp;
-(PmpModule.BadWrite imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;PmpRegions[pmpIndex].write))) &amp;&amp;
-(PmpModule.BadExecute imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex]. startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp; PmpRegions[pmpIndex].execute)))</formula>
-			<comment>Tested, success</comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[](PmpModule.GoodRead imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].read)) &amp;&amp;
-(PmpModule.GoodWrite imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].write)) &amp;&amp;
-(PmpModule.GoodExecute imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].execute)) &amp;&amp;
-(PmpModule.BadRead imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;PmpRegions[pmpIndex].read))) &amp;&amp;
-(PmpModule.BadWrite imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;PmpRegions[pmpIndex].write))) &amp;&amp;
-(PmpModule.BadExecute imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex]. startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp; PmpRegions[pmpIndex].execute))) &amp;&amp;
-(!ExceptionHandler.ExceptionRaised) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply GlobalMemoryIsScrambled == false) &amp;&amp;
-(FlashController.ScrambleCheck imply !GlobalMemoryIsScrambled) &amp;&amp;
-(SRAMController.HitOrMiss imply !GlobalMemoryIsScrambled) &amp;&amp;
-(MemoryHandling.ChooseType imply (((GlobalBootPolicy != GlobalEmptyBootPolicy) + (GlobalImageCode != 0) + (GlobalDigest != 0) + (GlobalPublicKey != GlobalEmptyPublicKey) + (GlobalManifest != GlobalEmptyManifest) + (GlobalSignature != 0) + (GlobalPrivateKey != GlobalEmptyPublicKey) + (GlobalPublicKeyIdWhitelist[0] != -1)) == 1)) &amp;&amp;
-(!PmpModule.canWrite(30 + 35 * ROMStage.loopIndex, 41 + 35 * ROMStage.loopIndex))</formula>
-			<comment>checked, failed</comment>
-		</query>
-		<query>
-			<formula>A[](SRAM.indexIsEmpty(6)) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply forall (i : int[0, 7]) (SRAM.scrambled[i] || SRAM.indexIsEmpty(i))) &amp;&amp;
-(!ExceptionHandler.ExceptionRaised) &amp;&amp;
-(!PmpModule.BadRead) &amp;&amp;
-(!PmpModule.BadWrite) &amp;&amp;
-(!PmpModule.BadExecute)
-</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[] (ROMStage.IdentifierChecked imply ROMStage.currentManifest.identifier == 1) &amp;&amp; 
-((CheckRomExtManifest.manifest.identifier == 1) == CheckRomExtManifest.checkRomExtManifest()) &amp;&amp; 
-(ROMStage.CheckingSignature imply (ROMStage.currentManifest.identifier == 1 &amp;&amp; ROMStage.currentManifest.publicKey.modulus == 1 &amp;&amp; ROMStage.currentManifest.publicKey.exponent == 1)) &amp;&amp;
-(ROMStage.CheckedSignature imply (ROMStage.currentManifest.identifier == 1 &amp;&amp; ROMStage.currentManifest.publicKey.modulus == 1 &amp;&amp;ROMStage.currentManifest.publicKey.exponent == 1 &amp;&amp;ROMStage.currentManifest.signature == 1)) &amp;&amp;
-(ROMStage.ReadyToRunROMExt imply (PmpRegions[0].execute &amp;&amp; PmpRegions[0].startAddress &lt;= ROMStage.currentManifest.entryPoint &amp;&amp; PmpRegions[0].endAddress &gt;= ROMStage.currentManifest.entryPoint + 4)) &amp;&amp;
-((CheckPubKeyValid.currentPubKeyId == 1) == CheckPubKeyValid.checkPublicKey()) &amp;&amp;
-((OTBN.signature == 1 &amp;&amp; OTBN.digest == 3 &amp;&amp; OTBN.key.modulus == 1 &amp;&amp; OTBN.key.exponent == 1) == OTBN.checkSignature()) &amp;&amp;
-(!ManifestObserver.Failure) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply ManifestObserver.Success)</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[] (ROMStage.IdentifierChecked imply ROMStage.currentManifest.identifier == 1) &amp;&amp; 
-((CheckRomExtManifest.manifest.identifier == 1) == CheckRomExtManifest.checkRomExtManifest()) &amp;&amp; 
-(ROMStage.CheckingSignature imply (ROMStage.currentManifest.identifier == 1 &amp;&amp; ROMStage.currentManifest.publicKey.modulus == 1 &amp;&amp; ROMStage.currentManifest.publicKey.exponent == 1)) &amp;&amp;
-(ROMStage.CheckedSignature imply (ROMStage.currentManifest.identifier == 1 &amp;&amp; ROMStage.currentManifest.publicKey.modulus == 1 &amp;&amp;ROMStage.currentManifest.publicKey.exponent == 1 &amp;&amp;ROMStage.currentManifest.signature == 1)) &amp;&amp;
-(ROMStage.ReadyToRunROMExt imply (PmpRegions[0].execute &amp;&amp; PmpRegions[0].startAddress &lt;= ROMStage.currentManifest.entryPoint &amp;&amp; PmpRegions[0].endAddress &gt;= ROMStage.currentManifest.entryPoint + 4)) &amp;&amp;
-((CheckPubKeyValid.currentPubKeyId == 1) == CheckPubKeyValid.checkPublicKey()) &amp;&amp;
-((OTBN.signature == 1 &amp;&amp; OTBN.digest == 3 &amp;&amp; OTBN.key.modulus == 1 &amp;&amp; OTBN.key.exponent == 1) == OTBN.checkSignature()) &amp;&amp;
-(!ManifestObserver.Failure) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply ManifestObserver.Success) &amp;&amp;
-(SRAM.indexIsEmpty(6)) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply forall (i : int[0, 7]) (SRAM.scrambled[i] || SRAM.indexIsEmpty(i))) &amp;&amp;
-(!ExceptionHandler.ExceptionRaised) &amp;&amp;
-(!PmpModule.BadRead) &amp;&amp;
-(!PmpModule.BadWrite) &amp;&amp;
-(!PmpModule.BadExecute) &amp;&amp;
-(PmpModule.GoodRead imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].read)) &amp;&amp;
-(PmpModule.GoodWrite imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].write)) &amp;&amp;
-(PmpModule.GoodExecute imply (exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;  PmpRegions[pmpIndex].execute)) &amp;&amp;
-(PmpModule.BadRead imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;PmpRegions[pmpIndex].read))) &amp;&amp;
-(PmpModule.BadWrite imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex].startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp;PmpRegions[pmpIndex].write))) &amp;&amp;
-(PmpModule.BadExecute imply (!(exists (pmpIndex : int[0,15]) PmpRegions[pmpIndex]. startAddress &lt;= PmpModule.start &amp;&amp; PmpRegions[pmpIndex].endAddress &gt;= PmpModule.end &amp;&amp; PmpRegions[pmpIndex].execute))) &amp;&amp;
-(!ExceptionHandler.ExceptionRaised) &amp;&amp;
-(FinalJumpToRomExt.ROMExtRunning imply GlobalMemoryIsScrambled == false) &amp;&amp;
-(FlashController.ScrambleCheck imply !GlobalMemoryIsScrambled) &amp;&amp;
-(SRAMController.HitOrMiss imply !GlobalMemoryIsScrambled) &amp;&amp;
-(MemoryHandling.ChooseType imply (((GlobalBootPolicy != GlobalEmptyBootPolicy) + (GlobalImageCode != 0) + (GlobalDigest != 0) + (GlobalPublicKey != GlobalEmptyPublicKey) + (GlobalManifest != GlobalEmptyManifest) + (GlobalSignature != 0) + (GlobalPrivateKey != GlobalEmptyPublicKey) + (GlobalPublicKeyIdWhitelist[0] != -1)) == 1)) &amp;&amp;
-(!PmpModule.canWrite(30 + 35 * ROMStage.loopIndex, 41 + 35 * ROMStage.loopIndex))
-</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>E&lt;&gt; exists (i : int [0, NumberOfFlashBanks - 1]) RomExt(i).Success</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula></formula>
-			<comment></comment>
-		</query>
-		<query>
 			<formula>E[] not( ROMStage.BootFailed || ROMStage.RomExtTerminated)</formula>
 			<comment>D1: Possibly Never Fail.                                                                                                                                                                                         
 This query states that there exists a path such that it always holds that the ROMStage 
@@ -3982,6 +3840,14 @@ exactly one of the guards must be true.</comment>
 This is a safety property. It says that according to the \uppTemp{PmpModule} template it is never possible 
 to write anything to the specific range of memory where the currentManifest is placed. This query validates
 that it is impossible to change the manifests by writing to flash.</comment>
+		</query>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; exists (i : int [0, NumberOfFlashBanks - 1]) RomExt(i).Success</formula>
+			<comment>Query to see if the malicious ROM_ext can reconstitute a secret key in the HMAC module using wipe vulnerability</comment>
 		</query>
 	</queries>
 </nta>
